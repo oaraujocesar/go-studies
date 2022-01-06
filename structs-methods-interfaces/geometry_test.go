@@ -3,7 +3,7 @@ package geometry
 import "testing"
 
 func TestPerimeter(t *testing.T) {
-	rectangle := Rectangle{width: 10.0, height: 10.0}
+	rectangle := Rectangle{Width: 10.0, Height: 10.0}
 
 	received := Perimeter(rectangle)
 	expected := 40.0
@@ -16,18 +16,22 @@ func TestPerimeter(t *testing.T) {
 func TestArea(t *testing.T) {
 
 	areaTests := []struct {
-		shape    Shape
-		expected float64
+		name    string
+		shape   Shape
+		hasArea float64
 	}{
-		{Rectangle{width: 2.0, height: 15.0}, 34.0},
-		{Circle{10}, 314.1592653589793},
+		{name: "Rectangle", shape: Rectangle{Width: 2.0, Height: 15.0}, hasArea: 34.0},
+		{name: "Circle", shape: Circle{Radius: 10}, hasArea: 314.1592653589793},
+		{name: "Triangle", shape: Triangle{Base: 12, Height: 6}, hasArea: 36.0},
 	}
 
 	for _, tt := range areaTests {
-		received := tt.shape.Area()
+		t.Run(tt.name, func(t *testing.T) {
+			received := tt.shape.Area()
 
-		if received != tt.expected {
-			t.Errorf("Received %g but expected %g", received, tt.expected)
-		}
+			if received != tt.hasArea {
+				t.Errorf("%#v Received %g but expected %g", tt.shape, received, tt.hasArea)
+			}
+		})
 	}
 }
