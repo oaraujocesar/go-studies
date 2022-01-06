@@ -3,9 +3,9 @@ package geometry
 import "testing"
 
 func TestPerimeter(t *testing.T) {
-	r := Rectangle{width: 10.0, height: 10.0}
+	rectangle := Rectangle{width: 10.0, height: 10.0}
 
-	received := Perimeter(r)
+	received := Perimeter(rectangle)
 	expected := 40.0
 
 	if received != expected {
@@ -14,11 +14,26 @@ func TestPerimeter(t *testing.T) {
 }
 
 func TestArea(t *testing.T) {
-	r := Rectangle{width: 5.0, height: 15.0}
-	received := Area(r)
-	expected := 75.0
 
-	if received != expected {
-		t.Errorf("received %.2f but expected %.2f", received, expected)
-	}
+	t.Run("Rectangles", func(t *testing.T) {
+		rectangle := Rectangle{width: 2.0, height: 15.0}
+
+		received := rectangle.Area()
+		expected := 34.0
+
+		if received != expected {
+			t.Errorf("received %g but expected %g", received, expected)
+		}
+	})
+
+	t.Run("Circles", func(t *testing.T) {
+		circle := Circle{10}
+
+		received := circle.Area()
+		expected := 314.1592653589793
+
+		if received != expected {
+			t.Errorf("received %g but expected %g", received, expected)
+		}
+	})
 }
