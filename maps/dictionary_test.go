@@ -12,6 +12,14 @@ func TestSearch(t *testing.T) {
 		}
 	}
 
+	assertError := func(t testing.TB, received, expected error, word string) {
+		t.Helper()
+
+		if received != expected {
+			t.Errorf("Received error %q, but expected %q", received, expected)
+		}
+	}
+
 	dictionary := Dictionary{"test": "this is just a test"}
 
 	t.Run("it should return the definition if a known word is passed", func(t *testing.T) {
@@ -25,13 +33,8 @@ func TestSearch(t *testing.T) {
 
 	t.Run("it should return an error if an unknown word is passed", func(t *testing.T) {
 		_, err := dictionary.Search("hey")
-		expected := "could not find the word you looking for"
 
-		if err == nil {
-			t.Fatal("expected to get an error")
-		}
-
-		assertStrings(t, err.Error(), expected, "hey")
+		assertError(t, err, ErrNotFound, "hey")
 	})
 
 }
