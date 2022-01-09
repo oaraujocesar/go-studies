@@ -37,4 +37,18 @@ func TestSearch(t *testing.T) {
 		assertError(t, err, ErrNotFound, "hey")
 	})
 
+	t.Run("it should add a new word and its definition to the dictionary", func(t *testing.T) {
+		dictionary := Dictionary{}
+
+		dictionary.Add("hey", "a simple greeting")
+
+		received, err := dictionary.Search("hey")
+		expected := "a simple greeting"
+
+		if err != nil {
+			t.Fatal("should find added word: ", err)
+		}
+
+		assertStrings(t, received, expected, "hey")
+	})
 }
