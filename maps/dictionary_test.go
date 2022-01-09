@@ -12,11 +12,26 @@ func TestSearch(t *testing.T) {
 		}
 	}
 
-	dictionary := map[string]string{"test": "this is just a test"}
+	dictionary := Dictionary{"test": "this is just a test"}
 
-	word := "test"
-	received := Search(dictionary, word)
-	expected := "this is just a test"
+	t.Run("it should return the definition if a known word is passed", func(t *testing.T) {
+		word := "test"
 
-	assertStrings(t, received, expected, word)
+		received, _ := dictionary.Search(word)
+		expected := "this is just a test"
+
+		assertStrings(t, received, expected, word)
+	})
+
+	t.Run("it should return an error if an unknown word is passed", func(t *testing.T) {
+		_, err := dictionary.Search("hey")
+		expected := "could not find the word you looking for"
+
+		if err == nil {
+			t.Fatal("expected to get an error")
+		}
+
+		assertStrings(t, err.Error(), expected, "hey")
+	})
+
 }
