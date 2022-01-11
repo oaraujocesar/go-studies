@@ -36,19 +36,30 @@ func TestSearch(t *testing.T) {
 
 		assertError(t, err, ErrNotFound, "hey")
 	})
+}
 
+func assertDefinition(t testing.TB, dictionary Dictionary, word, definition string) {
+	t.Helper()
+
+	received, err := dictionary.Search("hey")
+
+	if err != nil {
+		t.Fatal("should find added word: ", err)
+	}
+
+	if received != definition {
+		t.Errorf("Received %q, but expected %q given %q", received, definition, word)
+	}
+}
+
+func TestAdd(t *testing.T) {
 	t.Run("it should add a new word and its definition to the dictionary", func(t *testing.T) {
 		dictionary := Dictionary{}
+		word := "hey"
+		definition := "a simple greeting"
 
-		dictionary.Add("hey", "a simple greeting")
+		dictionary.Add(word, definition)
 
-		received, err := dictionary.Search("hey")
-		expected := "a simple greeting"
-
-		if err != nil {
-			t.Fatal("should find added word: ", err)
-		}
-
-		assertStrings(t, received, expected, "hey")
+		assertDefinition(t, dictionary, word, definition)
 	})
 }
