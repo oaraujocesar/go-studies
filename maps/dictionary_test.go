@@ -62,10 +62,10 @@ func TestAdd(t *testing.T) {
 	})
 }
 
-func assertError(t testing.TB, got, want error) {
+func assertError(t testing.TB, received, expected error) {
 	t.Helper()
-	if got != want {
-		t.Errorf("got %q want %q", got, want)
+	if received != expected {
+		t.Errorf("received %q expected %q", received, expected)
 	}
 }
 
@@ -80,4 +80,28 @@ func assertDefinition(t testing.TB, dictionary Dictionary, word, definition stri
 	if definition != received {
 		t.Errorf("received %q want %q", received, definition)
 	}
+}
+
+func TestUpdate(t *testing.T) {
+	t.Run("it should update an existing word", func(t *testing.T) {
+		word := "test"
+		definition := "this is just a test"
+		dictionary := Dictionary{word: definition}
+
+		newDefinition := "this is the new definition for test"
+
+		err := dictionary.Update(word, newDefinition)
+
+		assertError(t, err, nil)
+		assertDefinition(t, dictionary, word, newDefinition)
+	})
+
+	t.Run("it should return an error if word does not exists", func(t *testing.T) {
+		word := "test"
+		definition := "this is just a test"
+		dictionary := Dictionary{}
+
+		err := dictionary.Update(word, definition)
+		assertError(t, err, ErrWordDoesNotExist)
+	})
 }
