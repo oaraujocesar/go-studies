@@ -7,10 +7,10 @@ import (
 )
 
 func mockWebsiteChecker(url string) bool {
-	return url == "waat://furhurterwe.geds"
+	return url != "waat://furhurterwe.geds"
 }
 
-func TestcheckWebsites(t *testing.T) {
+func TestCheckWebsites(t *testing.T) {
 	websites := []string{
 		"http://google.com",
 		"http://blog.gypsydave5.com",
