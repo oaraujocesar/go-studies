@@ -9,7 +9,10 @@ import (
 )
 
 func main() {
-	name := "César O. Araújo"
+	name := os.Args[1]
+
+	fmt.Println(os.Args[0])
+	fmt.Println(os.Args[1])
 
 	template := fmt.Sprint(`
 	<!DOCTYPE html>
