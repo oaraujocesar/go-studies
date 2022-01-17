@@ -1,11 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+	"log"
+	"os"
+	"strings"
+)
 
 func main() {
 	name := "César O. Araújo"
 
-	template := `
+	template := fmt.Sprint(`
 	<!DOCTYPE html>
 	<html lang="pt-br">
 	<head>
@@ -16,7 +22,15 @@ func main() {
 	<h1>` + name + `</h1>
 	</body>
 	</html>
-	`
+	`)
 
-	fmt.Println(template)
+	newfile, err := os.Create("index.html")
+
+	if err != nil {
+		log.Fatal("error creating new file", err)
+	}
+
+	defer newfile.Close()
+
+	io.Copy(newfile, strings.NewReader(template))
 }
