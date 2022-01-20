@@ -100,10 +100,12 @@ func countLines(filename string, f *os.File, counts map[string]map[string]int) {
 	input := bufio.NewScanner(f)
 
 	for input.Scan() {
+		// if the name is not there yet, this will add it.
 		if counts[input.Text()] == nil {
 			counts[input.Text()] = make(map[string]int)
 		}
 
+		// if it's already there, just increment the occurence
 		counts[input.Text()][filename]++
 	}
 }
