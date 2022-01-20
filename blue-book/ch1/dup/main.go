@@ -12,9 +12,9 @@ import (
 func main() {
 	// dup1()
 
-	// dup2()
+	dup2()
 
-	dup3()
+	// dup3()
 }
 
 func dup1() {
@@ -32,11 +32,11 @@ func dup1() {
 }
 
 func dup2() {
-	counts := make(map[string]int)
+	counts := make(map[string]map[string]int)
 	files := os.Args[1:]
 
 	if len(files) == 0 {
-		countLines(os.Stdin, counts)
+		countLines("os.Stdin", os.Stdin, counts)
 	} else {
 		for _, arg := range files {
 			file, err := os.Open(arg)
@@ -45,15 +45,30 @@ func dup2() {
 				fmt.Fprintf(os.Stderr, "dup2: %v\n", err)
 			}
 
-			countLines(file, counts)
+			countLines(arg, file, counts)
 
 			defer file.Close()
 		}
 	}
 
-	for line, n := range counts {
-		if n > 1 {
-			fmt.Printf("%d\t%s\n", n, line)
+	for line, filenames := range counts {
+		fileCount := len(filenames)
+
+		if fileCount == 1 {
+			total := 0
+
+			for _, count := range filenames {
+				total += count
+			}
+
+			if total <= 1 {
+				continue
+			}
+		}
+
+		fmt.Printf("[Found in %d file(s)]\t%s\n", fileCount, line)
+		for name, count := range filenames {
+			fmt.Printf("\t%d hit(s) in %s\n", count, name)
 		}
 	}
 }
@@ -81,10 +96,14 @@ func dup3() {
 	}
 }
 
-func countLines(f *os.File, counts map[string]int) {
+func countLines(filename string, f *os.File, counts map[string]map[string]int) {
 	input := bufio.NewScanner(f)
 
 	for input.Scan() {
-		counts[input.Text()]++
+		if counts[input.Text()] == nil {
+			counts[input.Text()] = make(map[string]int)
+		}
+
+		counts[input.Text()][filename]++
 	}
 }
