@@ -1,4 +1,4 @@
-package main
+package lissajous
 
 import (
 	"image"
@@ -7,18 +7,11 @@ import (
 	"io"
 	"math"
 	"math/rand"
-	"os"
-	"time"
 )
 
 var palette = []color.Color{color.White, color.Black, color.RGBA{0x34, 0xC8, 0x34, 0xFF}, color.RGBA{0xFF, 0x00, 0x00, 0xFF}}
 
-func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
-	lissajous(os.Stdout)
-}
-
-func lissajous(out io.Writer) {
+func Lissajous(out io.Writer) {
 	const (
 		cycles  = 5
 		res     = 0.001
