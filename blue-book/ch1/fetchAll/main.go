@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -26,6 +27,11 @@ func main() {
 
 func fetch(url string, ch chan<- string) {
 	start := time.Now()
+
+	prefix := "http://"
+	if !strings.HasPrefix(url, prefix) {
+		url = prefix + url
+	}
 
 	res, err := http.Get(url)
 
