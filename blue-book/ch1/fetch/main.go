@@ -21,7 +21,7 @@ func main() {
 			fmt.Fprintf(os.Stderr, "fetch: %v\n", err)
 		}
 
-		status := strings.NewReader(res.Status)
+		status := strings.NewReader(res.Status + "\n")
 
 		_, error := io.Copy(os.Stdout, io.MultiReader(status, res.Body))
 
