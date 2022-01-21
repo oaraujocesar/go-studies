@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -35,7 +35,15 @@ func fetch(url string, ch chan<- string) {
 		return
 	}
 
-	nbytes, err := io.Copy(ioutil.Discard, res.Body)
+	newfile, err := os.Create("index.html")
+
+	if err != nil {
+		log.Fatal("error creating new file", err)
+	}
+
+	defer newfile.Close()
+
+	nbytes, err := io.Copy(newfile, res.Body)
 
 	defer res.Body.Close()
 
