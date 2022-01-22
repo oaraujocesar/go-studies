@@ -5,6 +5,8 @@ import (
 	"log"
 	"net/http"
 	"sync"
+
+	lissajous "github.com/oaraujocesar/go-studies/blue-book/ch1/gifs"
 )
 
 var mu sync.Mutex
@@ -13,6 +15,7 @@ var count int
 func main() {
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/count", countHandler)
+	http.HandleFunc("/lissajous", lissajousHandler)
 
 	log.Fatal(http.ListenAndServe("localhost:3000", nil))
 }
@@ -47,4 +50,8 @@ func countHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Count %d\n", count)
 
 	mu.Unlock()
+}
+
+func lissajousHandler(w http.ResponseWriter, r *http.Request) {
+	lissajous.Lissajous(w)
 }
