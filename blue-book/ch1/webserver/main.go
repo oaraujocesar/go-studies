@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"sync"
 
 	lissajous "github.com/oaraujocesar/go-studies/blue-book/ch1/gifs"
@@ -53,5 +54,10 @@ func countHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func lissajousHandler(w http.ResponseWriter, r *http.Request) {
-	lissajous.Lissajous(w)
+
+	qc := r.URL.Query()["cycles"][0]
+
+	cycles, _ := strconv.Atoi(qc)
+
+	lissajous.Lissajous(w, cycles)
 }
