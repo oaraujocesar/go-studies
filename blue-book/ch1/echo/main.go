@@ -2,6 +2,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"strings"
@@ -21,6 +22,8 @@ func main() {
 	echo2()
 
 	echo3()
+
+	echo4()
 
 	fmt.Printf("enlapsed %.6fs", time.Since(start).Seconds())
 }
@@ -62,4 +65,18 @@ func echo3() {
 	secs := time.Since(start).Seconds()
 
 	fmt.Printf("echo3 - %.7fs %s\n", secs, s)
+}
+
+func echo4() {
+	var n = flag.Bool("n", false, "omit trailing newline")
+	var sep = flag.String("s", " ", "separator")
+
+	flag.Parse()
+
+	fmt.Print("echo4 - ", strings.Join(flag.Args(), *sep)+"\n")
+
+	if !*n {
+		fmt.Println()
+	}
+
 }
