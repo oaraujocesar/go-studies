@@ -1,5 +1,7 @@
 package tempconv
 
+import "fmt"
+
 type Celsius float64
 type Fahrenheit float64
 
@@ -15,4 +17,12 @@ func CelsiusToFahrenheit(c Celsius) (f Fahrenheit, inputC Celsius) {
 
 func FahrenheitToCelsius(f Fahrenheit) (c Celsius, inputF Fahrenheit) {
 	return Celsius((f - 32) * 5 / 9), f
+}
+
+func (c Celsius) String() string {
+	return fmt.Sprintf("%g°C", c)
+}
+
+func (f Fahrenheit) String() string {
+	return fmt.Sprintf("%g°F", f)
 }
