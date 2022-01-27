@@ -13,7 +13,7 @@ func main() {
 		t, err := strconv.ParseFloat(arg, 64)
 
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "cf: %v\n", err)
+			fmt.Fprintf(os.Stderr, "cfk: %v\n", err)
 			os.Exit(1)
 		}
 
@@ -22,7 +22,9 @@ func main() {
 
 		convC, _ := tempconv.FahrenheitToCelsius(f)
 		convF, _ := tempconv.CelsiusToFahrenheit(c)
+		convK, _ := tempconv.CelsiusToKelvin(c)
 
 		fmt.Printf("%s = %s, %s = %s\n", f, convC, c, convF)
+		fmt.Printf("%v = %v\n", c, convK)
 	}
 }
