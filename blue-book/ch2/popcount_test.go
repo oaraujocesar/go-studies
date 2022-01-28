@@ -19,3 +19,10 @@ func BenchmarkPopCountLoop(b *testing.B) {
 		popcount.PopCountLoop(120)
 	}
 }
+
+// BenchmarkPopCountShiftValue-12 - 68561527 - 18.08 ns/op - 0 B/op - 0 allocs/op
+func BenchmarkPopCountShiftValue(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		popcount.PopCountShiftValue(120)
+	}
+}
