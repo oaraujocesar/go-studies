@@ -26,3 +26,10 @@ func BenchmarkPopCountShiftValue(b *testing.B) {
 		popcount.PopCountShiftValue(120)
 	}
 }
+
+// BenchmarkPopCountClearRightMost-12 - 363935689 - 3.227 ns/op - 0 B/op - 0 allocs/op
+func BenchmarkPopCountClearRightmost(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		popcount.PopCountClearRightmost(120)
+	}
+}
