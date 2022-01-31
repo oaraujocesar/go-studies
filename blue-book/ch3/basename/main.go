@@ -3,26 +3,18 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 // removes directory components and a .suffix.
 // examples: a => a, a.go => a, a/b/c => c, a/b.c.go => b.c
 func basename(s string) string {
+	slash := strings.LastIndex(s, "/")
 
-	// Removes / and everything before it
-	for i := len(s) - 1; i >= 0; i-- {
-		if s[i] == '/' {
-			s = s[i+1:]
-			break
-		}
-	}
+	s = s[slash+1:]
 
-	// Keeps everything before last .
-	for i := len(s) - 1; i >= 0; i-- {
-		if s[i] == '.' {
-			s = s[:i]
-			break
-		}
+	if dot := strings.LastIndex(s, "."); dot >= 0 {
+		s = s[:dot]
 	}
 
 	return s
